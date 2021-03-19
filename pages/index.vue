@@ -1,20 +1,24 @@
 <template>
-  <div class="container">
-    <p>123</p>
+  <div>
+    主页
+    {{ res }}
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({
-
+<script lang='ts'>
+import { Component, Vue } from 'vue-property-decorator'
+import { getUser } from '@/api/login'
+@Component({
+  async asyncData ({ $axios }) {
+    const res = await getUser({ $axios })
+    return { res }
+  }
 })
+export default class index extends Vue {
+  sum:number=2
+}
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
-p{
-  color: red;
-}
 </style>

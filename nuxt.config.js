@@ -10,9 +10,7 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   loading: { color: '#1373e2' },
 
@@ -24,9 +22,7 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '@/plugins/element-ui'
-  ],
+  plugins: ['@/plugins/element-ui', '@/plugins/request.js', '@/plugins/api.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -42,11 +38,14 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
-    '@nuxt/content'
+    '@nuxt/content',
+    ['@nuxtjs/dotenv', { filename: `.env.${process.env.BASE}` }]
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseUrl: process.env.BASE_URL
+  },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
@@ -54,5 +53,9 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/]
+  },
+  server: {
+    port: process.env.BASE_PORT,
+    host: process.env.BASE_HOST
   }
 }

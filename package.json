@@ -3,21 +3,26 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt-ts",
-    "build": "nuxt-ts build",
-    "start": "nuxt-ts start",
-    "generate": "nuxt-ts generate",
-    "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
-    "lint": "npm run lint:js",
+    "dev": "cross-env NODE_ENV=development BASE=dev nuxt",
+    "build": "cross-env NODE_ENV=production BASE=prod nuxt build",
+    "start": "cross-env NODE_ENV=production BASE=prod nuxt start",
+    "generate": "cross-env NODE_ENV=production BASE=prod nuxt generate",
+    "build:test": "cross-env NODE_ENV=testing BASE=test nuxt build",
+    "start:test": "cross-env NODE_ENV=testing BASE=test nuxt start",
+    "generate:test": "cross-env NODE_ENV=testing BASE=test nuxt generate",
     "test": "jest"
   },
   "dependencies": {
     "@nuxt/content": "^1.11.1",
     "@nuxt/typescript-runtime": "^2.0.1",
+    "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.12.5",
+    "@nuxtjs/dotenv": "^1.4.1",
     "core-js": "^3.8.3",
     "element-ui": "^2.15.0",
-    "nuxt": "^2.14.12"
+    "nuxt": "^2.14.12",
+    "vue-class-component": "^7.2.6",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.12",
@@ -28,6 +33,8 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
+    "babel-plugin-component": "^1.1.1",
+    "cross-env": "^7.0.3",
     "eslint": "^7.18.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.5.0",
@@ -36,6 +43,7 @@
     "sass": "^1.32.8",
     "sass-loader": "10",
     "ts-jest": "^26.4.4",
-    "vue-jest": "^3.0.4"
+    "vue-jest": "^3.0.4",
+    "vue-property-decorator": "^9.1.2"
   }
 }
