@@ -1,6 +1,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 @Component
-export default class UserLoginMixin extends Vue {
+export default class CaptchaMixin extends Vue {
     captchaTip: string = '点击获取图片验证码'
     imageCodeUrl: string = ''
     getCaptcha () {

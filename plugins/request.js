@@ -1,31 +1,22 @@
-import { Message } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
 export default function ({ $axios, app }, inject) {
   inject('message', Message)
+  inject('msgbox', MessageBox)
   $axios.onRequest((config) => {
   })
   $axios.onResponse(({ config, data }) => {
-    /*     if (config.url !== '/') {
-      if (data.Status) {
-        app.$message.success(data.Message)
-      } else {
-        app.$message.error(data.Message)
-      }
-    } */
+    // 响应的业务码处理
     switch (data.code) {
       case 200:
-        Message({ type: 'success', message: data.msg })
+        if (config.method !== 'get') { Message({ type: 'success', message: data.msg }) }
         break
       case 422:
-        Message({ type: 'error', message: '账号格式错误' })
+        Message({ type: 'error', message: data.msg || data.error })
         break
       default:
-        Message({ type: 'warning', message: data.msg })
+        Message({ type: 'warning', message: data.msg || data.error })
         break
     }
     return data
-  })
-
-  $axios.onError((error) => {
-    console.log(error)
   })
 }

@@ -1,19 +1,19 @@
 <template>
-  <main id="login">
+  <div id="register">
     <el-form
-      ref="ruleForm"
-      :model="ruleForm"
+      ref="registerForm"
+      :model="registerForm"
       status-icon
       :rules="rules"
-      label-width="100px"
-      class="demo-ruleForm"
+      label-width="80px"
+      class="demo-registerForm"
     >
       <el-form-item label="用户名" prop="username">
-        <el-input v-model="ruleForm.username" placeholder="输入您的用户名" clearable />
+        <el-input v-model="registerForm.username" placeholder="输入您的用户名" clearable />
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input
-          v-model="ruleForm.email"
+          v-model="registerForm.email"
           placeholder="输入您的邮箱"
           type="email"
           autocomplete="on"
@@ -22,23 +22,23 @@
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input
-          v-model="ruleForm.password"
+          v-model="registerForm.password"
           placeholder="输入密码"
           type="password"
           show-password
           clearable
         />
       </el-form-item>
-      <el-form-item label="再次输入密码" prop="passwordCheck">
+      <el-form-item label="确认密码" prop="passwordcheck">
         <el-input
-          v-model="ruleForm.passwordcheck"
-          placeholder="再次输入密码"
+          v-model="registerForm.passwordcheck"
+          placeholder="确认密码"
           type="password"
           show-password
           clearable
         />
       </el-form-item>
-      <el-form-item label="图片验证码" class="imagecode" prop="captcha">
+      <el-form-item label="验证码" class="imagecode" prop="captcha">
         <div class="img">
           <img v-if="imageCodeUrl" :src="imageCodeUrl" alt="图片验证码" @click="getCaptcha">
         </div>
@@ -50,30 +50,39 @@
         >
           {{ captchaTip }}
         </el-button>
-        <el-input
-          v-if="imageCodeUrl"
-          v-model="ruleForm.captcha"
-          placeholder="输入验证码"
-          clearable
-        />
+        <el-input v-if="imageCodeUrl" v-model="registerForm.captcha" placeholder="输入验证码" clearable />
       </el-form-item>
       <el-form-item>
-        <el-button style="display:block;width:100%" type="primary" size="default" @click="submitRegisterForm('ruleForm')">
-          登录
+        <el-button
+          style="display:block;width:100%"
+          type="primary"
+          size="default"
+          @click="submitRegisterForm()"
+        >
+          注册
+        </el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-button style="display:block;width:100%" size="default" @click="routerToLogin">
+          已有账号,前往登录
         </el-button>
       </el-form-item>
     </el-form>
-  </main>
+  </div>
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
-import UserLoginMixin from '@/mixins/register'
+import { Component, Mixins, Ref } from 'vue-property-decorator'
 import { validateUsername, validateEmail, validatePassword, validatePasswordCheck, validateCaptcha } from '@/validate/register'
+import CaptchaMixin from '~/mixins/captcha'
 import { postUserRegister } from '~/api/login'
-@Component({})
-export default class login extends Mixins(UserLoginMixin) {
-  ruleForm = {
+@Component({
+  auth: false,
+  layout: 'auth'
+})
+export default class Register extends Mixins(CaptchaMixin) {
+  @Ref('registerForm') readonly registerRef!:HTMLFormElement
+  registerForm = {
     username: '',
     email: '',
     password: '',
@@ -85,28 +94,38 @@ export default class login extends Mixins(UserLoginMixin) {
     username: [{ validator: validateUsername, trigger: 'blur' }],
     email: [{ validator: validateEmail, trigger: 'blur' }],
     password: [{ validator: validatePassword, trigger: 'blur' }],
-    passwordCheck: [{ validator: validatePasswordCheck, trigger: 'blur' }],
+    passwordcheck: [{ validator: validatePasswordCheck, trigger: 'blur' }],
     captcha: [{ validator: validateCaptcha, trigger: 'blur' }]
   };
 
-  async submitRegisterForm () {
-    const res = await postUserRegister({
-      $axios: this.$axios,
-      param:
-    {
-      username: this.ruleForm.username,
-      email: this.ruleForm.email,
-      password: this.ruleForm.password,
-      captcha: this.ruleForm.captcha
-    }
+  routerToLogin () {
+    this.$router.push('/login')
+  }
+
+  submitRegisterForm () {
+    this.registerRef.validate(async (valid:boolean) => {
+      if (valid) {
+        const res = await postUserRegister({
+          $axios: this.$axios,
+          param:
+          {
+            username: this.registerForm.username,
+            email: this.registerForm.email,
+            password: this.registerForm.password,
+            captcha: this.registerForm.captcha
+          }
+        })
+        if (res.code === 200) { this.$router.push('/login') } else {
+          this.getCaptcha()
+        }
+      }
     })
-    console.log(res)
   }
 }
 </script>
 
 <style scoped lang="scss">
-#login {
+#register {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,8 +150,8 @@ export default class login extends Mixins(UserLoginMixin) {
           position: absolute;
           right: 0;
         }
-        .el-input{
-          width:180px;
+        .el-input {
+          width: 180px;
           position: absolute;
           right: 0;
         }

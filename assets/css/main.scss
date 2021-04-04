@@ -1,3 +1,9 @@
 *,*::before*::after{
     box-sizing: border-box;
 }
+.el-upload{
+    width: 100%;
+}
+.el-tag--dark{
+    border:none;
+}

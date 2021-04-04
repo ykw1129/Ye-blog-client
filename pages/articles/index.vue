@@ -1,18 +1,170 @@
 <template>
-  <div>
-    article页面
+  <div id="article">
+    <ul>
+      <li v-for="article in res.data" :key="article._id">
+        <nuxt-link :to="`/articles/${article._id}`">
+          <div class="cover">
+            <img :src="article.coverId.url" :alt="article.title">
+          </div>
+          <div class="other">
+            <h4>{{ article.title }}</h4>
+            <p class="description">
+              简介:{{ article.description }}
+            </p>
+            <div class="tags">
+              <el-tag
+                v-for="(tag,index) in article.tags"
+                :key="index"
+                :color="tag.bgColor"
+                size="normal"
+                effect="dark"
+              >
+                {{ tag.name }}
+              </el-tag>
+            </div>
+            <div class="info">
+              <div class="creator">
+                <span>
+                  <i class="el-icon-user" />
+                  {{ article.createUser.username }}
+                </span>
+              </div>
+              <div class="createtime">
+                <span>
+                  <i class="el-icon-edit" />
+                  {{ article.createTime|fromNow }}
+                </span>
+              </div>
+              <div class="icons">
+                <span>
+                  <i class="el-icon-view" />
+                  {{ article.meta.viewTotal }}
+                </span>
+                <span>
+                  <i class="el-icon-chat-dot-square" />
+                  {{ article.meta.commentTotal }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </nuxt-link>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script lang='ts'>
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
+import { getAllArticle } from '@/api/article'
 
-@Component
+@Component({
+  auth: false,
+  async asyncData ({ $axios }) {
+    const res = await getAllArticle({ $axios })
+    return { res }
+  }
+})
 export default class articles extends Vue {
 
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+#article {
+  ul {
+    li {
+      margin-bottom: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s;
+      &:hover {
+        transition: all 0.3s;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+      }
+      & > a {
+        display: block;
+        color: #303133;
+        box-sizing: border-box;
+        height: 200px;
+        &::after {
+          content: "";
+          clear: both;
+        }
+        .cover {
+          height: 100%;
+          float: left;
+          width: 300px;
+          box-sizing: border-box;
+          padding: 5px;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .other {
+          height: 100%;
+          width: 500px;
+          box-sizing: border-box;
+          padding: 5px 10px;
+          float: left;
+          h4 {
+            font-size: 22px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            margin-bottom: 10px;
+          }
+          .description {
+            color: #909399;
+            line-height: 1.5;
+            height: 80px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+          }
+          .tags {
+            margin-bottom: 10px;
+            height: 32px;
+            .el-tag {
+              margin-right: 10px;
+            }
+          }
+          .info {
+            color: #606266;
+            display: flex;
+            font-size: 13px;
+            height: 25px;
+            align-items: flex-end;
+            justify-content: space-between;
+            .creator {
+              span {
+                i {
+                  padding-right: 5px;
+                }
+              }
+            }
+            .createtime {
+              span {
+                i {
+                  padding-right: 5px;
+                }
+              }
+            }
+            .icons {
+              span {
+                i {
+                  padding: 0 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 </style>

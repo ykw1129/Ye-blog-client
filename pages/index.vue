@@ -1,24 +1,15 @@
-<template>
-  <div>
-    主页
-    {{ res }}
-  </div>
-</template>
-
-<script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
-import { getUser } from '@/api/login'
-@Component({
-  async asyncData ({ $axios }) {
-    const res = await getUser({ $axios })
-    return { res }
+<script>
+export default {
+  name: 'HomePage',
+  middleware ({ store, route, redirect, params, query, req, res }) {
+    redirect('/articles') // 默认跳转页面的路由
   }
-})
-export default class index extends Vue {
-  sum:number=2
+  // 下面两个也能达到目的，但是体验不好，会有明显的从无到有的缓动效果
+  // beforeCreate() {
+  //   this.$router.push('/homeIndex')
+  // },
+  // created() {
+  //   this.$router.push('/homeIndex')
+  // },
 }
 </script>
-
-<style scoped>
-
-</style>

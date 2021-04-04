@@ -18,11 +18,51 @@ export default {
   css: [
     '~assets/css/reset.css',
     'element-ui/lib/theme-chalk/index.css',
-    '~assets/css/main.scss'
+    '~assets/css/main.scss',
+    'quill/dist/quill.snow.css',
+    'quill/dist/quill.bubble.css',
+    'quill/dist/quill.core.css'
   ],
-
+  router: {
+    middleware: ['auth']
+  },
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          type: false,
+          maxAge: 60 * 60 * 24
+        },
+        user: {
+          property: 'user'
+        },
+        endpoints: {
+          login: { url: '/user/login', method: 'post' },
+          user: { url: '/user/info', method: 'get' }
+        }
+      }
+    },
+    redirect: {
+      home: '/articles',
+      logout: '/articles'
+    },
+    cookie: {
+      options: {
+        maxAge: 60 * 60 * 24
+      }
+    }
+  },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/element-ui', '@/plugins/request.js', '@/plugins/api.js'],
+  plugins: [
+    '@/plugins/element-ui',
+    '@/plugins/request.js',
+    '@/plugins/api.js',
+    '@/plugins/moment.js',
+    '@/plugins/passive.js',
+    { src: '@/plugins/quill-editor.js', ssr: false },
+    { src: '@/plugins/mavon-editor', ssr: false }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -37,6 +77,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     ['@nuxtjs/dotenv', { filename: `.env.${process.env.BASE}` }]
@@ -44,7 +85,8 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseUrl: process.env.BASE_URL
+    baseUrl: process.env.BASE_URL,
+    credentials: true
   },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
