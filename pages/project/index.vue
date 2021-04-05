@@ -1,7 +1,7 @@
 <template>
   <div id="project">
     <ul>
-      <li v-for="item in res.data" :key="item._id">
+      <li v-for="item in data" :key="item._id">
         <div class="img">
           <img :src="item.coverImageId.url" :alt="item.coverImageId.name">
         </div>
@@ -60,7 +60,9 @@ import { getAllProject } from '@/api/project'
   auth: false,
   async asyncData ({ $axios }) {
     const res = await getAllProject({ $axios })
-    return { res }
+    return {
+      data: res.data
+    }
   }
 })
 export default class project extends Vue {

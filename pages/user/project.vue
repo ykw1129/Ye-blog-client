@@ -32,9 +32,9 @@
         :width="tableInfo.linkUrl.width"
       >
         <template slot-scope="scope">
-          <nuxt-link :to="scope.row.linkUrl">
+          <a :href="scope.row.linkUrl" target="_blank">
             {{ scope.row.linkUrl }}
-          </nuxt-link>
+          </a>
         </template>
       </el-table-column>
       <el-table-column
@@ -82,14 +82,23 @@
         </template>
       </el-table-column>
     </el-table>
+    <Dialog-Project-Edit
+      :project-edit-visible="ProjectEditVisible"
+      :project-conent="projectConent"
+      @dialog-close="close"
+    />
   </div>
 </template>
 
 <script lang='ts'>
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { getUserProject } from '../../api/project'
+import DialogProjectEdit from '@/components/dialog/DialogProjectEdit.vue'
+import { Component, Vue } from 'vue-property-decorator'
+import { getUserProject, getProjectContent } from '@/api/project'
 @Component({
   layout: 'user',
+  components: {
+    DialogProjectEdit
+  },
   async asyncData ({ $axios, store }) {
     const res = await getUserProject({ $axios, param: { id: store.state.auth.user._id } })
     return {
@@ -103,11 +112,15 @@ export default class project extends Vue {
     coverImageId: { name: 'coverImageId', label: '项目图片', width: 150 },
     linkUrl: { name: 'linkUrl', label: '仓库地址', width: 200 },
     name: { name: 'name', label: '文章名', width: 190 },
-    description: { name: 'description', label: '项目简介', width: 180 },
+    description: { name: 'description', label: '项目简介', width: 250 },
     status: { name: 'status', label: '状态', width: 180 },
     operation: { label: '操作', width: 180 }
   }
 
+  // 项目编辑表显示隐藏
+  ProjectEditVisible:boolean = false
+  // 项目表单内的值
+  projectConent: object = {}
   // 处理 项目状态
   getStatus (val: string) {
     let str = ''
@@ -120,6 +133,24 @@ export default class project extends Vue {
         break
     }
     return str
+  }
+
+  async getProjectInfo (id:string) {
+    const res = await getProjectContent({ $axios: this.$axios, param: { id } })
+    this.projectConent = res.data
+    if (res.code === 200) {
+      this.ProjectEditVisible = true
+    }
+  }
+
+  // 打开项目表单
+  edit (e: string) {
+    this.getProjectInfo(e)
+  }
+
+  // 模态框关闭时，将值设为false
+  close (e: boolean) {
+    this.ProjectEditVisible = e
   }
 }
 </script>

@@ -4,7 +4,7 @@ interface params<t> {
   }
 export function postProject (payload:params<any>) {
   return payload.$axios.request({
-    url: '/project/create',
+    url: '/project',
     method: 'post',
     data: payload.param,
     withCredentials: true
@@ -21,6 +21,22 @@ export function getUserProject (payload:params<any>) {
     url: '/project/user',
     method: 'get',
     params: { id: payload.param.id },
+    withCredentials: true
+  })
+}
+export function getProjectContent (payload:params<any>) {
+  return payload.$axios.request({
+    url: '/project/content',
+    method: 'get',
+    params: { id: payload.param.id },
+    withCredentials: true
+  })
+}
+export function putUserProject (payload:params<any>) {
+  return payload.$axios.request({
+    url: '/project',
+    method: 'put',
+    data: payload.param,
     withCredentials: true
   })
 }

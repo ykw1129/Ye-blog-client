@@ -64,7 +64,7 @@
       <el-button @click="ProjectVisible = false">
         取 消
       </el-button>
-      <el-button type="primary" @click="postProject()">
+      <el-button type="primary" @click="putProject()">
         发布
       </el-button>
     </div>
@@ -74,22 +74,26 @@
 <script lang='ts'>
 import UploadMixin from '@/mixins/imageUpload'
 import CaptchaMixin from '@/mixins/captcha'
-import { Component, Prop, Mixins, Ref, Emit } from 'vue-property-decorator'
-import { postProject } from '@/api/project'
+import { Component, Prop, Mixins, Ref, Emit, Watch } from 'vue-property-decorator'
+import { putUserProject } from '@/api/project'
 import { upload } from '@/api/user'
 import { validateCaptcha } from '@/validate/edit'
 
 @Component
 export default class DialogProject extends Mixins(UploadMixin, CaptchaMixin) {
-    @Prop({ type: Boolean }) private ProjectVisible:any
+    @Prop({ type: Boolean, required: true }) private ProjectEditVisible:any
+    @Prop({ type: Object, required: true }) private ProjectConent:any
     @Ref('projectForm') readonly projectRef!:HTMLFormElement
     @Emit()dialogClose () { return false }//   dialog关闭前的回调
+    @Watch('ProjectEditVisible', { immediate: true })// 当dialog显示切换时，获取项目数据
+    onVisible (val:boolean) { if (val) { this.init() } }
 
     // label的宽度
   formLabelWidth: string = '120px'
 
   // 项目表单
   projectForm = {
+    id: '',
     name: '',
     description: '',
     linkUrl: '',
@@ -108,22 +112,36 @@ export default class DialogProject extends Mixins(UploadMixin, CaptchaMixin) {
     description: [{ required: true, trigger: 'blur', message: '请填写项目描述' }, { max: 30, trigger: 'change', message: '描述最大为30个字符' }]
   };
 
+  // 编辑数据初始化
+  init () {
+    this.projectForm.coverImageId = this.ProjectConent.coverImageId._id
+    this.projectForm.id = this.ProjectConent._id
+    this.imageUrl = this.ProjectConent.coverImageId.url
+    this.projectForm.name = this.ProjectConent.name
+    this.projectForm.description = this.ProjectConent.description
+    this.projectForm.status = this.ProjectConent.status
+    this.projectForm.linkUrl = this.ProjectConent.linkUrl
+    this.projectForm.projectUrl = this.ProjectConent.projectUrl
+  }
+
   // 发送项目表单
-  postProject () {
+  putProject () {
+    console.log(this.projectForm)
     const formData = new FormData()
     this.projectRef.validate(async (valid: boolean) => {
       if (valid) {
         if (this.imageFile) {
-          formData.append('file', this.imageFile, `${Date.now()}.jpg`)
+          formData.append('file', this.imageFile, `${Date.now()}.${this.imageType}`)
           formData.append('name', this.projectForm.name)
           formData.append('type', 'project')
           const res = await upload({ $axios: this.$axios, param: formData })
           this.projectForm.coverImageId = res.data._id
         }
-        const res = await postProject({
+        const res = await putUserProject({
           $axios: this.$axios,
           param:
           {
+            id: this.projectForm.id,
             name: this.projectForm.name,
             description: this.projectForm.description,
             coverImageId: this.projectForm.coverImageId,
@@ -134,11 +152,10 @@ export default class DialogProject extends Mixins(UploadMixin, CaptchaMixin) {
           }
         })
         if (res.code === 200) {
-          const info = await this.$auth.fetchUser()
-          if ((info as any).code === 200) {
-            this.projectRef.resetProject()
-            this.ProjectVisible = false
-          }
+          this.dialogClose()
+          location.reload()
+        } else {
+          this.getCaptcha()
         }
       }
     })

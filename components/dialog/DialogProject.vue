@@ -114,7 +114,7 @@ export default class DialogProject extends Mixins(UploadMixin, CaptchaMixin) {
     this.projectRef.validate(async (valid: boolean) => {
       if (valid) {
         if (this.imageFile) {
-          formData.append('file', this.imageFile, `${Date.now()}.jpg`)
+          formData.append('file', this.imageFile, `${Date.now()}..${this.imageType}`)
           formData.append('name', this.projectForm.name)
           formData.append('type', 'project')
           const res = await upload({ $axios: this.$axios, param: formData })

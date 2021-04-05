@@ -99,6 +99,7 @@ body {
           }
         }
         h1 {
+          font-family: KaiTi;
           margin: 30px 0;
           font-weight: bold;
           font-size: 30px;

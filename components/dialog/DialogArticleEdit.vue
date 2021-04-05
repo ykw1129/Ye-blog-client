@@ -176,7 +176,7 @@ export default class DialogArticleEdit extends Mixins(UploadMixin, CaptchaMixin)
   @Ref('mavon') readonly mavonRef!: any
   @Emit() dialogClose () { return false }//   dialog关闭前的回调
   @Watch('ArticleEditVisible', { immediate: true })
-  onVisible (val:boolean, newVal:boolean) { if (val) { this.init() } }
+  onVisible (val:boolean) { if (val) { this.init() } }
 
   // 标签颜色
   color: string = '#409EFF'
@@ -345,7 +345,6 @@ export default class DialogArticleEdit extends Mixins(UploadMixin, CaptchaMixin)
     } else {
       this.$message({ type: 'warning', message: '请输入标签' })
     }
-    console.log(this.articleForm.tags)
     this.inputVisible = false
     this.inputValue = ''
   }

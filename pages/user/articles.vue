@@ -145,7 +145,6 @@ export default class UserArticle extends Vue {
   async getArticleInfo (id: string) {
     const res = await getArticleContent({ $axios: this.$axios, param: { id } })
     this.articleConent = res.data
-    console.log(this.articleConent)
     if (res.code === 200) {
       this.ArticleEditVisible = true
     }
