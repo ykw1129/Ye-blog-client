@@ -72,16 +72,16 @@
 
 <script lang='ts'>
 import { Component, Mixins, Ref } from 'vue-property-decorator'
-import { validateUsername, validateEmail, validatePassword, validatePasswordCheck, validateCaptcha } from '@/validate/register'
 import CaptchaMixin from '~/mixins/captcha'
 import { postUserRegister } from '~/api/login'
+
 @Component({
   auth: false,
   layout: 'auth'
 })
 export default class Register extends Mixins(CaptchaMixin) {
   @Ref('registerForm') readonly registerRef!: HTMLFormElement
-  labelWidth:string = '80px'
+  labelWidth: string = '80px'
   registerForm = {
     username: '',
     email: '',
@@ -90,12 +90,18 @@ export default class Register extends Mixins(CaptchaMixin) {
     captcha: ''
   };
 
+  validatePasswordCheck (rule: any, value: string, callback: Function) {
+    if (value === '') { callback(new Error('请输入确认密码')) } else if (value === this.registerForm.password) { callback() } else {
+      callback(new Error('两次密码不相同'))
+    }
+  }
+
   rules = {
-    username: [{ validator: validateUsername, trigger: 'blur' }],
-    email: [{ validator: validateEmail, trigger: 'blur' }],
-    password: [{ validator: validatePassword, trigger: 'blur' }],
-    passwordcheck: [{ validator: validatePasswordCheck, trigger: 'blur' }],
-    captcha: [{ validator: validateCaptcha, trigger: 'blur' }]
+    username: [{ required: true, trigger: 'blur', message: '用户名不能为空' }, { type: 'string', max: 12, trigger: 'blur', message: '用户名不超过12个字符' }],
+    email: [{ required: true, trigger: 'blur', message: '邮箱不能为空' }, { pattern: /^([a-zA-Z\d])(\w|\-)+@[a-zA-Z\d]+\.[a-zA-Z]{2,4}$/, trigger: 'blur', message: '邮箱格式错误' }],
+    password: [{ required: true, trigger: 'blur', message: '密码不能为空' }, { pattern: /^.*(?=.{6,18})(?=.*\d)(?=.*[A-Za-z]).*$/, trigger: 'blur', message: '密码长度不得超过15个字符' }],
+    passwordcheck: [{ validator: this.validatePasswordCheck, trigger: 'blur' }],
+    captcha: [{ required: true, trigger: 'blur', message: '图片验证码不能为空' }, { pattern: /^[A-Za-z0-9]{4}$/, trigger: 'change', message: '请输入正确的图片验证码' }]
   };
 
   routerToLogin () {

@@ -58,7 +58,6 @@
 
 <script lang='ts'>
 import { Component, Mixins, Ref } from 'vue-property-decorator'
-import { validateEmail, validatePassword, validateCaptcha } from '@/validate/register'
 import CaptchaMixin from '@/mixins/captcha'
 @Component({
   layout: 'auth'
@@ -73,9 +72,9 @@ export default class login extends Mixins(CaptchaMixin) {
   };
 
   rules = {
-    email: [{ validator: validateEmail, trigger: 'blur' }],
-    password: [{ validator: validatePassword, trigger: 'blur' }],
-    captcha: [{ validator: validateCaptcha, trigger: 'blur' }]
+    email: [{ required: true, trigger: 'blur', message: '邮箱不能为空' }, { pattern: /^([a-zA-Z\d])(\w|\-)+@[a-zA-Z\d]+\.[a-zA-Z]{2,4}$/, trigger: 'blur', message: '邮箱格式错误' }],
+    password: [{ required: true, trigger: 'blur', message: '密码不能为空' }, { pattern: /^.*(?=.{6,18})(?=.*\d)(?=.*[A-Za-z]).*$/, trigger: 'blur', message: '密码长度不得超过15个字符' }],
+    captcha: [{ required: true, trigger: 'blur', message: '图片验证码不能为空' }, { pattern: /^[A-Za-z0-9]{4}$/, trigger: 'change', message: '请输入正确的图片验证码' }]
   };
 
   routerToRegister () {
