@@ -8,7 +8,7 @@
         </div>
         <div class="info">
           <p>{{ content.createUser.username }}</p>
-          <div class="description">
+          <div class="user-description">
             {{ content.createUser.description }}
           </div>
         </div>
@@ -21,15 +21,14 @@
             {{ content.meta.viewTotal }}
           </span>
           <span>
-            <i class="el-icon-star-off" />
-            {{ content.meta.likeTotal }}
-          </span>
-          <span>
             <i class="el-icon-chat-dot-square" />
             {{ content.meta.commentTotal }}
           </span>
         </div>
       </div>
+    </div>
+    <div class="description">
+      <i>{{ content.description }}</i>
     </div>
     <div class="cover">
       <img :src="content.coverId.url" :alt="content.coverId.name">
@@ -51,7 +50,7 @@
 </template>
 
 <script lang='ts'>
-import CommentArticle from '@/components/CommentArticle.vue'
+import CommentArticle from '@/components/comment/CommentArticle.vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import 'mavon-editor/dist/css/index.css'
 @Component({
@@ -71,7 +70,6 @@ main {
   background-color: #fff;
   padding: 10px;
   box-sizing: border-box;
-  min-height: 100vh;
   & > h1 {
     text-align: center;
     font-size: 30px;
@@ -113,7 +111,8 @@ main {
           font-size: 14px;
           color: #303133;
         }
-        .description {
+        .user-description {
+          font-style: italic;
           font-size: 12px;
           color: #606266;
         }
@@ -144,6 +143,10 @@ main {
         }
       }
     }
+  }
+  .description{
+    padding: 8px 25px;
+    font-style: italic;
   }
   .cover {
     padding: 8px 25px 15px 25px;

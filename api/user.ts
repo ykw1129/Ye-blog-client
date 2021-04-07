@@ -2,6 +2,7 @@ interface params<t> {
     $axios: t,
     param?: t
   }
+  // 上传
 export function upload (payload:params<any>) {
   return payload.$axios.request({
     url: '/upload',
@@ -12,6 +13,15 @@ export function upload (payload:params<any>) {
     data: payload.param
   })
 }
+// 上传随机
+export function uploadRandom (payload:params<any>) {
+  return payload.$axios.request({
+    url: '/upload/random',
+    method: 'post',
+    data: payload.param
+  })
+}
+// 更新用户信息
 export function putUserInfo (payload:params<any>) {
   return payload.$axios.request({
     url: '/user/info',
@@ -20,11 +30,12 @@ export function putUserInfo (payload:params<any>) {
     withCredentials: true
   })
 }
-export function getUserArticle (payload:params<any>) {
+// 更新用户链接
+export function putUserLinks (payload:params<any>) {
   return payload.$axios.request({
-    url: '/article/user',
-    method: 'get',
-    params: { id: payload.param.id },
+    url: '/user/link',
+    method: 'put',
+    data: payload.param,
     withCredentials: true
   })
 }

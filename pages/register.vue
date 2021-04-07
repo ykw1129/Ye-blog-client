@@ -5,13 +5,12 @@
       :model="registerForm"
       status-icon
       :rules="rules"
-      label-width="80px"
       class="demo-registerForm"
     >
-      <el-form-item label="用户名" prop="username">
+      <el-form-item label="用户名" prop="username" :label-width="labelWidth">
         <el-input v-model="registerForm.username" placeholder="输入您的用户名" clearable />
       </el-form-item>
-      <el-form-item label="邮箱" prop="email">
+      <el-form-item label="邮箱" prop="email" :label-width="labelWidth">
         <el-input
           v-model="registerForm.email"
           placeholder="输入您的邮箱"
@@ -20,7 +19,7 @@
           clearable
         />
       </el-form-item>
-      <el-form-item label="密码" prop="password">
+      <el-form-item label="密码" prop="password" :label-width="labelWidth">
         <el-input
           v-model="registerForm.password"
           placeholder="输入密码"
@@ -29,7 +28,7 @@
           clearable
         />
       </el-form-item>
-      <el-form-item label="确认密码" prop="passwordcheck">
+      <el-form-item label="确认密码" prop="passwordcheck" :label-width="labelWidth">
         <el-input
           v-model="registerForm.passwordcheck"
           placeholder="确认密码"
@@ -38,7 +37,7 @@
           clearable
         />
       </el-form-item>
-      <el-form-item label="验证码" class="imagecode" prop="captcha">
+      <el-form-item label="验证码" class="imagecode" prop="captcha" :label-width="labelWidth">
         <div class="img">
           <img v-if="imageCodeUrl" :src="imageCodeUrl" alt="图片验证码" @click="getCaptcha">
         </div>
@@ -81,7 +80,8 @@ import { postUserRegister } from '~/api/login'
   layout: 'auth'
 })
 export default class Register extends Mixins(CaptchaMixin) {
-  @Ref('registerForm') readonly registerRef!:HTMLFormElement
+  @Ref('registerForm') readonly registerRef!: HTMLFormElement
+  labelWidth:string = '80px'
   registerForm = {
     username: '',
     email: '',
@@ -103,7 +103,7 @@ export default class Register extends Mixins(CaptchaMixin) {
   }
 
   submitRegisterForm () {
-    this.registerRef.validate(async (valid:boolean) => {
+    this.registerRef.validate(async (valid: boolean) => {
       if (valid) {
         const res = await postUserRegister({
           $axios: this.$axios,
@@ -126,13 +126,10 @@ export default class Register extends Mixins(CaptchaMixin) {
 
 <style scoped lang="scss">
 #register {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 62px);
+  margin: auto;
+  width: 500px;
   form {
     width: 500px;
-    height: 500px;
     margin: auto;
     .el-input__inner {
       height: 42px;

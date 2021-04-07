@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { MenuItem, Icon, Menu, Avatar, Image, Tooltip, TableColumn, Link, Table, Badge, Form, Loading, FormItem, Autocomplete, ColorPicker, Radio, Tag, RadioGroup, Button, Tabs, Upload, Dialog, Submenu, Input, Carousel, CarouselItem, Dropdown, DropdownItem, DropdownMenu } from 'element-ui'
+import { MenuItem, Icon, Pagination, Menu, Avatar, Image, Tooltip, TableColumn, Link, Table, Badge, Form, Loading, FormItem, Autocomplete, ColorPicker, Radio, Tag, RadioGroup, Button, Tabs, Upload, Dialog, Submenu, Input, Carousel, CarouselItem, Dropdown, DropdownItem, DropdownMenu } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(MenuItem)
   .use(Icon)
@@ -30,3 +30,4 @@ Vue.use(MenuItem)
   .use(TableColumn)
   .use(Image)
   .use(Tooltip)
+  .use(Pagination)

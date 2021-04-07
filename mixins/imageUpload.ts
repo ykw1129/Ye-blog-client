@@ -6,7 +6,6 @@ export default class UploadMixin extends Vue {
     imageType:string = ''
     // 上传状态改变时
     onUploadChange (file: any) {
-      console.log(file)
       this.imageFile = file.raw
       this.imageType = file.name.substring(file.name.lastIndexOf('.') + 1)
       this.imageUrl = URL.createObjectURL(file.raw)

@@ -1,9 +1,14 @@
 *,*::before*::after{
     box-sizing: border-box;
 }
+@import 'http://at.alicdn.com/t/font_2465593_4n665erw1as.css';
 .el-upload{
     width: 100%;
 }
 .el-tag--dark{
     border:none;
+}
+#default{
+    background-position: center center;
+    background-size: cover;
 }

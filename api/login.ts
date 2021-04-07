@@ -8,10 +8,10 @@ export function getLoginCaptcha (payload: params<any>) {
 }
 // 用户注册
 export function postUserRegister (payload: params<any>) {
-  return payload.$axios.post('/user/register', {
-    captcha: payload.param.captcha,
-    username: payload.param.username,
-    email: payload.param.email,
-    password: payload.param.password
-  }, { withCredentials: true })
+  return payload.$axios.request({
+    url: '/user/register',
+    method: 'post',
+    data: payload.param,
+    withCredentials: true
+  })
 }

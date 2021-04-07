@@ -1,5 +1,20 @@
 <template>
-  <div id="article">
+  <div id="tag">
+    <section class="title">
+      <h1 :style="{backgroundColor:`${tagInfo.bgColor}`}">
+        #{{ tagInfo.name }}
+      </h1>
+      <div class="info">
+        <div class="user">
+          <i class="el-icon-user-solid" />
+          标签创建者:{{ tagInfo.createUser.username }}
+        </div>
+        <div class="time">
+          <i class="el-icon-edit" />
+          {{ tagInfo.createTime|lll }}
+        </div>
+      </div>
+    </section>
     <ul>
       <li v-for="article in articles" :key="article._id">
         <nuxt-link :to="`/articles/${article._id}`">
@@ -18,7 +33,6 @@
                 :color="tag.bgColor"
                 size="normal"
                 effect="dark"
-                @click="handleTagClick(tag._id)"
               >
                 {{ tag.name }}
               </el-tag>
@@ -66,34 +80,53 @@
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
-import { getAllArticle } from '@/api/article'
+import { getTagArticle } from '@/api/article'
 
 @Component({
   watchQuery: ['page'],
   auth: false,
-  async asyncData ({ $axios, query }) {
-    const res = await getAllArticle({ $axios, param: { page: query.page } })
+  async asyncData ({ $axios, params, query }) {
+    const res = await getTagArticle({ $axios, param: { id: params.id, page: query.page || 1 } })
     return {
+      tagInfo: res.data.tagInfo,
       articles: res.data.articles,
       total: res.data.total
     }
   }
 })
-export default class Articles extends Vue {
+export default class Tag extends Vue {
   pageCurrent: number = 1
   currentChange (current: string) {
     this.$router.push({ path: 'articles', query: { page: current } })
-  }
-
-  handleTagClick (id:string) {
-    this.$router.push(`/tag/${id}`)
   }
 }
 </script>
 
 <style scoped lang="scss">
-#article {
-  ul {
+#tag {
+  .title {
+    h1 {
+      padding: 20px 0;
+      color: #fff;
+      font-size: 60px;
+      text-align: center;
+    }
+    .info {
+      padding: 10px 20px;
+      margin: 10px 0;
+      background-color: #fff;
+      display: flex;
+      justify-content: space-between;
+      color: #909399;
+      .user {
+        font-size: 14px;
+      }
+      .time {
+        font-size: 14px;
+      }
+    }
+  }
+    ul {
 
     height:1100px;
     li {
@@ -191,8 +224,8 @@ export default class Articles extends Vue {
       }
     }
   }
-  .papagination {
-    text-align: center;
+  .papagination{
+      text-align: center;
   }
 }
 </style>

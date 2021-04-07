@@ -1,5 +1,8 @@
 <template>
-  <div id="default">
+  <div
+    id="default"
+    :style="{backgroundImage:`url(${auth.loginIn?auth.user.bgImageId.url:'http://ceshi123123123.oss-cn-beijing.aliyuncs.com/blog/background/bgimage.jpg'})`}"
+  >
     <Header />
     <Nuxt />
   </div>
@@ -7,9 +10,9 @@
 
 <script lang="ts">
 
-import Header from '@/components/Header.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { State } from 'vuex-class'
+import Header from '~/components/index/Header.vue'
 
 @Component({
   components: {
@@ -23,6 +26,7 @@ export default class Art extends Vue {
 </script>
 <style lang="scss" scoped>
 #default {
+  background-attachment: fixed;
   background-color: #f7f8fa;
 }
 

@@ -25,11 +25,11 @@
           </el-menu-item>
           <el-menu-item index="/user/edit">
             <i class="el-icon-setting" />
-            资料修改
+            信息修改
           </el-menu-item>
-          <el-menu-item index="/user/set">
-            <i class="el-icon-bank-card" />
-            密码修改
+          <el-menu-item index="/user/link">
+            <i class="el-icon-link" />
+            链接修改
           </el-menu-item>
         </el-menu>
       </div>
@@ -45,7 +45,7 @@ import {
   State
 } from 'vuex-class'
 import { Component, Vue } from 'vue-property-decorator'
-import UserHeader from '@/components/UserHeader.vue'
+import UserHeader from '~/components/index/UserHeader.vue'
 @Component({
   components: {
     UserHeader

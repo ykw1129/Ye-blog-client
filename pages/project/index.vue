@@ -1,14 +1,14 @@
 <template>
   <div id="project">
     <ul>
-      <li v-for="item in data" :key="item._id">
+      <li v-for="project in projects" :key="project._id">
         <div class="img">
-          <img :src="item.coverImageId.url" :alt="item.coverImageId.name">
+          <img :src="project.coverImageId.url" :alt="project.coverImageId.name">
         </div>
         <div class="txt">
           <h4>
             <p class="title">
-              {{ item.name }}
+              {{ project.name }}
             </p>
             <div class="creator">
               <div class="avatar">
@@ -16,39 +16,45 @@
                   icon="el-icon-user-solid"
                   size="medium"
                   shape="circle"
-                  :src="item.createUser.avatarId.url"
+                  :src="project.createUser.avatarId.url"
                   fit="fill"
                 />
               </div>
               <div class="username">
-                {{ item.createUser.username }}
+                {{ project.createUser.username }}
               </div>
             </div>
           </h4>
           <div class="description">
-            {{ item.description }}
+            {{ project.description }}
           </div>
           <div class="project-url">
             代码地址/仓库:
-            <a :href="item.linkUrl" target="_blank">
-              {{ item.linkUrl }}
-            </a>
+            <a :href="project.linkUrl" target="_blank">{{ project.linkUrl }}</a>
           </div>
           <div class="project-url">
             部署地址:
-            <a :href="item.projectUrl" target="_blank">
-              {{ item.projectUrl }}
-            </a>
+            <a :href="project.projectUrl" target="_blank">{{ project.projectUrl }}</a>
           </div>
           <div class="info">
-            <span class="time">{{ item.startTime }}-{{ item.endTime||'至今' }}</span>
+            <span class="time">{{ project.startTime }}-{{ project.endTime||'至今' }}</span>
             <div class="status">
-              {{ statusArr[item.status-1] }}
+              {{ statusArr[project.status-1] }}
             </div>
           </div>
         </div>
       </li>
     </ul>
+    <div class="papagination">
+      <el-pagination
+        background
+        :page-size="6"
+        :pager-count="11"
+        layout="prev, pager, next"
+        :total="total"
+        @current-change="currentChange"
+      />
+    </div>
   </div>
 </template>
 
@@ -56,24 +62,36 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getAllProject } from '@/api/project'
 @Component({
-
+  watchQuery: ['page'],
   auth: false,
-  async asyncData ({ $axios }) {
-    const res = await getAllProject({ $axios })
+  async asyncData ({ $axios, query }) {
+    const res = await getAllProject({ $axios, param: { page: query.page } })
     return {
-      data: res.data
+      projects: res.data.projects,
+      total: res.data.total
     }
   }
 })
 export default class project extends Vue {
   statusArr: string[] = ['已完成', '进行中', '已废弃']
+  pageCurrent: number = 1
+  currentChange (current: string) {
+    this.$router.push({ path: 'project', query: { page: current } })
+  }
 }
 </script>
 
 <style scoped lang="scss">
 #project {
   ul {
+    height: calc(451px * 3);
+    &::after {
+      clear: both;
+      content: "";
+      display: block;
+    }
     li {
+      background-color: #fff;
       float: left;
       width: 380px;
       margin-bottom: 20px;
@@ -84,7 +102,7 @@ export default class project extends Vue {
         }
       }
       .txt {
-        height: 240px;
+        height: 220px;
         padding: 4px 8px;
         box-shadow: 1px 2px 3px 0px rgba($color: #000000, $alpha: 0.1);
         h4 {
@@ -109,15 +127,16 @@ export default class project extends Vue {
             .username {
               max-width: 60px;
               overflow: hidden;
+              line-height: 1.2;
               text-overflow: ellipsis;
               white-space: nowrap;
             }
           }
         }
         .description {
-          margin-bottom: 20px;
+          margin-bottom: 10px;
           line-height: 1.2;
-          height: 60px;
+          height: 50px;
           width: 364px;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -133,6 +152,7 @@ export default class project extends Vue {
             display: block;
             color: #909399;
             overflow: hidden;
+            line-height: 1.2;
             text-overflow: ellipsis;
 
             white-space: nowrap;
@@ -158,6 +178,10 @@ export default class project extends Vue {
         margin-right: 40px;
       }
     }
+  }
+  .papagination {
+    text-align: center;
+    bottom: 10px;
   }
 }
 </style>

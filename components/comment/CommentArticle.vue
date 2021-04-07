@@ -93,8 +93,8 @@
 import { Component, Vue, Prop, Ref } from 'vue-property-decorator'
 import { State } from 'vuex-class'
 import { postComment, getComment } from '@/api/comment'
-import ReplyComment from './ReplyComment.vue'
-import ReplyList from './ReplyList.vue'
+import ReplyComment from '~/components/comment/ReplyComment.vue'
+import ReplyList from '~/components/comment/ReplyList.vue'
 @Component({
   components: {
     ReplyComment,

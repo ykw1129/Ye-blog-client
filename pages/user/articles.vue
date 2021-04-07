@@ -109,10 +109,9 @@
 <script lang='ts'>
 
 import { Component, Vue, Ref } from 'vue-property-decorator'
-import { getUserArticle } from '@/api/user'
 import { State } from 'vuex-class'
 import DialogArticleEdit from '@/components/dialog/DialogArticleEdit.vue'
-import { getArticleContent, deleteUserArticle } from '@/api/article'
+import { getUserArticle, getArticleContent, deleteUserArticle } from '@/api/article'
 @Component({
   components: {
     DialogArticleEdit

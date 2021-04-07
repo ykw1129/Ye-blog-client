@@ -76,7 +76,7 @@
               size="small"
               type="danger"
               icon="el-icon-remove"
-              @click="remove(scope.row._id,scope.row.title)"
+              @click="remove(scope.row._id,scope.row.name)"
             />
           </el-tooltip>
         </template>
@@ -93,7 +93,7 @@
 <script lang='ts'>
 import DialogProjectEdit from '@/components/dialog/DialogProjectEdit.vue'
 import { Component, Vue } from 'vue-property-decorator'
-import { getUserProject, getProjectContent } from '@/api/project'
+import { getUserProject, getProjectContent, deleteUserProject } from '@/api/project'
 @Component({
   layout: 'user',
   components: {
@@ -151,6 +151,30 @@ export default class project extends Vue {
   // 模态框关闭时，将值设为false
   close (e: boolean) {
     this.ProjectEditVisible = e
+  }
+
+  remove (id: string, title: string) {
+    this.$msgbox({
+      title: '项目删除',
+      message: `确定删除项目“${title}”吗?`,
+      showCancelButton: true,
+      confirmButtonText: '删除',
+      cancelButtonText: '取消',
+      beforeClose: async (action, instance, done) => {
+        if (action === 'confirm') {
+          instance.confirmButtonLoading = true
+          instance.confirmButtonText = '执行中...'
+          const res = await deleteUserProject({ $axios: this.$axios, param: { id } })
+          if (res.code === 200) {
+            instance.confirmButtonLoading = false
+            done()
+            location.reload()
+          }
+        } else {
+          done()
+        }
+      }
+    })
   }
 }
 </script>

@@ -43,7 +43,16 @@
         登录
       </el-menu-item>
       <el-menu-item class="right">
-        <el-input placeholder="请输入内容" prefix-icon="el-icon-search" />
+        <el-autocomplete
+          v-model="searchWord"
+          highlight-first-item
+          :trigger-on-focus="false"
+          :fetch-suggestions="querySearchAsync"
+          placeholder="请输入关键字"
+          prefix-icon="el-icon-search"
+          style="width:300px"
+          @select="handleSelect"
+        />
       </el-menu-item>
     </el-menu>
   </header>
@@ -51,23 +60,35 @@
 
 <script lang="ts">
 import { State } from 'vuex-class'
+import { searchArticle } from '@/api/article'
 import { Component, Vue } from 'vue-property-decorator'
 @Component({
 
 })
 export default class Header extends Vue {
   @State auth: any
-  activeIndex: string = '/artcle';
-
-  imageHandleCode: string = 'image/auto-orient,1/resize,m_fill,w_80,h_80/quality,q_100/bright,10'
-  handleSelect (key: string, keyPath: string): void { }
+  activeIndex: string = '/artcle'
+  searchWord: string = ''
   logout () {
     this.$auth.logout()
   }
 
   mounted () {
     const arr = this.$route.fullPath.split('/')
-    this.activeIndex = '/' + arr[1]
+    this.activeIndex = '/' + arr[1].split('?')[0]
+  }
+
+  async querySearchAsync (queryString:string, cb:Function) {
+    const res = await searchArticle({ $axios: this.$axios, param: { word: queryString } })
+    if (res.code === 200) {
+      cb(res.data)
+    }
+  }
+
+  handleSelect (item:any) {
+    if (item) {
+      this.$router.push(`/articles/${item._id}`)
+    }
   }
 }
 </script>

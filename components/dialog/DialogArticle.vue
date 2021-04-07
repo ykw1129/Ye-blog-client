@@ -220,6 +220,19 @@ export default class DialogArticle extends Mixins(UploadMixin, CaptchaMixin) {
     tags: []
   }
 
+  // 验证富文本和markdown是否为空
+  contentValidate () {
+    if (this.articleForm.contentType === '0' && this.articleForm.content.trim().length === 0) {
+      this.$message({ type: 'warning', message: '富文本不能为空' })
+      return false
+    } else if (this.articleForm.contentType === '1' && this.articleForm.markContent.trim().length === 0) {
+      this.$message({ type: 'warning', message: 'markdown不能为空' })
+      return false
+    } else {
+      return true
+    }
+  }
+
   // 文章表单验证
   articleRules = {
     title: [{ required: true, trigger: 'blur', message: '请填写文章标题' }, { max: 20, trigger: 'change', message: '标题最大为20个字符' }],
@@ -253,18 +266,20 @@ export default class DialogArticle extends Mixins(UploadMixin, CaptchaMixin) {
   // 上传文章
   postArticle () {
     const formData = new FormData()
-    this.articleRef.validate(async (valid: boolean) => {
-      if (valid) {
-        if (this.imageFile) {
-          formData.append('file', this.imageFile, `${Date.now()}.${this.imageType}`)
-          formData.append('name', this.articleForm.title)
-          formData.append('type', 'article')
-          const res = await upload({ $axios: this.$axios, param: formData })
-          this.articleForm.coverId = res.data._id
-        }
-        const res = await postArticle({
-          $axios: this.$axios,
-          param:
+    this.articleRef.validate(async (valide: boolean) => {
+      if (valide) {
+        const valid = this.contentValidate()
+        if (valid) {
+          if (this.imageFile) {
+            formData.append('file', this.imageFile, `${Date.now()}.${this.imageType}`)
+            formData.append('name', this.articleForm.title)
+            formData.append('type', 'article')
+            const res = await upload({ $axios: this.$axios, param: formData })
+            this.articleForm.coverId = res.data._id
+          }
+          const res = await postArticle({
+            $axios: this.$axios,
+            param:
           {
             title: this.articleForm.title,
             description: this.articleForm.description,
@@ -275,9 +290,10 @@ export default class DialogArticle extends Mixins(UploadMixin, CaptchaMixin) {
             tags: this.articleForm.tags,
             contentType: this.articleForm.contentType
           }
-        })
-        if (res.code === 200) {
-          this.$router.push('/articles')
+          })
+          if (res.code === 200) {
+            this.$router.push('/articles')
+          }
         }
       }
     })
