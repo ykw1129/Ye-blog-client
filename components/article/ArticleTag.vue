@@ -2,6 +2,9 @@
   <ul>
     <li v-for="tag in tags" :key="tag._id">
       <el-tag size="normal" effect="dark" :color="tag.bgColor" @click="handleTagClick(tag._id)">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-biaoqian" />
+        </svg>
         {{ tag.name }}
       </el-tag>
     </li>

@@ -20,6 +20,9 @@
                 effect="dark"
                 @click="handleTagClick(tag._id)"
               >
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-biaoqian" />
+                </svg>
                 {{ tag.name }}
               </el-tag>
             </div>
@@ -69,6 +72,9 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getAllArticle } from '@/api/article'
 
 @Component({
+  head: {
+    title: 'Ye博客-文章'
+  },
   watchQuery: ['page'],
   auth: false,
   async asyncData ({ $axios, query }) {

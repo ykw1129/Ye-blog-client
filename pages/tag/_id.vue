@@ -2,7 +2,9 @@
   <div id="tag">
     <section class="title">
       <h1 :style="{backgroundColor:`${tagInfo.bgColor}`}">
-        #{{ tagInfo.name }}
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-biaoqian" />
+        </svg>{{ tagInfo.name }}
       </h1>
       <div class="info">
         <div class="user">
@@ -85,8 +87,9 @@ import { getTagArticle } from '@/api/article'
 @Component({
   watchQuery: ['page'],
   auth: false,
-  async asyncData ({ $axios, params, query }) {
-    const res = await getTagArticle({ $axios, param: { id: params.id, page: query.page || 1 } })
+  async asyncData ({ app, $axios, params, query }) {
+    const res = await getTagArticle({ $axios, param: { id: params.id, page: query.page || 1 } });
+    (app as any).head.title = `标签-${res.data.tagInfo.name}`
     return {
       tagInfo: res.data.tagInfo,
       articles: res.data.articles,

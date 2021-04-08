@@ -38,6 +38,9 @@ import { State } from 'vuex-class'
 import { putUserLinks } from '@/api/user'
 
 @Component({
+  head: {
+    title: 'Ye博客-用户链接管理'
+  },
   layout: 'user'
 })
 export default class Links extends Vue {

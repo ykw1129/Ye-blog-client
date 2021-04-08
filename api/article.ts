@@ -7,8 +7,7 @@ export function postArticle (payload:params<any>) {
   return payload.$axios.request({
     url: '/article',
     method: 'post',
-    data: payload.param,
-    withCredentials: true
+    data: payload.param
   })
 }
 // 获取所有文章

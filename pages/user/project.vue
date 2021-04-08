@@ -95,6 +95,9 @@ import DialogProjectEdit from '@/components/dialog/DialogProjectEdit.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { getUserProject, getProjectContent, deleteUserProject } from '@/api/project'
 @Component({
+  head: {
+    title: 'Ye博客-用户项目管理'
+  },
   layout: 'user',
   components: {
     DialogProjectEdit

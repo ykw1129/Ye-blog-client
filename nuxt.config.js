@@ -12,12 +12,14 @@ export default {
       { hid: 'description', name: 'description', content: 'Ye博客,放置前端技术知识，个人项目经验，个人技术总结，为所有前端开发提供的免费的知识分享，期望和大家一起交流，一起进步！' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+
   },
   loading: { color: '#1373e2' },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~assets/css/reset.css',
+    '~assets/css/iconfont.css',
     'element-ui/lib/theme-chalk/index.css',
     '~assets/css/main.scss',
     'quill/dist/quill.snow.css',
@@ -61,6 +63,7 @@ export default {
     '@/plugins/api.js',
     '@/plugins/moment.js',
     '@/plugins/passive.js',
+    { src: '@/assets/js/iconfont.js', ssr: false },
     { src: '@/plugins/quill-editor.js', ssr: false },
     { src: '@/plugins/mavon-editor', ssr: false }
   ],
@@ -80,18 +83,14 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     // https://go.nuxtjs.dev/content
-    '@nuxt/content',
     ['@nuxtjs/dotenv', { filename: `.env.${process.env.BASE}` }]
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseUrl: process.env.BASE_URL
+    baseUrl: process.env.BASE_URL,
+    withCredentials: true
   },
-
-  // Content module configuration: https://go.nuxtjs.dev/config-content
-  content: {},
-
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/],

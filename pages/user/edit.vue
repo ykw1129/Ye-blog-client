@@ -66,6 +66,9 @@ import CaptchaMixin from '~/mixins/captcha'
 import UploadMixin from '~/mixins/imageUpload'
 
 @Component({
+  head: {
+    title: 'Ye博客-用户资料管理'
+  },
   layout: 'user'
 })
 export default class Edit extends Mixins(CaptchaMixin, UploadMixin) {

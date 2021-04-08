@@ -9,8 +9,7 @@
               "node": "current"
             }
           }
-        ],
-        ["es2015", { "modules": false }]
+        ]
       ],
       "plugins": [
         [

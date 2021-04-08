@@ -60,11 +60,14 @@
 import { Component, Mixins, Ref } from 'vue-property-decorator'
 import CaptchaMixin from '@/mixins/captcha'
 @Component({
-  layout: 'auth'
+  layout: 'auth',
+  head: {
+    title: 'Ye博客-用户登录'
+  }
 })
 export default class login extends Mixins(CaptchaMixin) {
   @Ref('loginForm') readonly loginRef!: HTMLFormElement
-  labelWidth: string = '60px'
+  labelWidth: string = '80px'
   loginForm = {
     email: '',
     password: '',
@@ -86,10 +89,11 @@ export default class login extends Mixins(CaptchaMixin) {
   }
 
   submitLoginForm () {
+    console.log(this.loginForm.captcha)
     this.loginRef.validate(async (valid: boolean) => {
       if (valid) {
         const res = await this.$auth.loginWith('local', { data: this.loginForm })
-        if ((res as any).code === 200) { console.log(res) } else {
+        if ((res as any).code !== 200) {
           this.getCaptcha()
         }
       }

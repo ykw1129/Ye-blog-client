@@ -15,7 +15,7 @@
       </div>
       <div class="other">
         <p>发表时间:{{ content.createTime|fromNow }}</p>
-        <div class="icon">
+        <div class="other-icon">
           <span>
             <i class="el-icon-view" />
             {{ content.meta.viewTotal }}
@@ -131,7 +131,7 @@ main {
         font-size: 12px;
         color: #303133;
       }
-      .icon {
+      .other-icon {
         font-size: 14px;
         color: #606266;
         display: flex;

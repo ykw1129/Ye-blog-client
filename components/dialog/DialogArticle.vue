@@ -14,7 +14,9 @@
           style="color:#fff"
           @close="handleClose(tag)"
         >
-          {{ tag.name }}
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-biaoqian" />
+          </svg>{{ tag.name }}
         </el-tag>
         <div v-if="inputVisible" style="display:inline-block;position: relative;">
           <el-autocomplete

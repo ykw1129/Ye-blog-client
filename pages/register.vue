@@ -76,6 +76,9 @@ import CaptchaMixin from '~/mixins/captcha'
 import { postUserRegister } from '~/api/login'
 
 @Component({
+  head: {
+    title: 'Ye博客-用户注册'
+  },
   auth: false,
   layout: 'auth'
 })

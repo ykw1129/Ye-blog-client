@@ -62,6 +62,9 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getAllProject } from '@/api/project'
 @Component({
+  head: {
+    title: 'Ye博客-项目'
+  },
   watchQuery: ['page'],
   auth: false,
   async asyncData ({ $axios, query }) {

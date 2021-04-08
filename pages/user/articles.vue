@@ -113,6 +113,9 @@ import { State } from 'vuex-class'
 import DialogArticleEdit from '@/components/dialog/DialogArticleEdit.vue'
 import { getUserArticle, getArticleContent, deleteUserArticle } from '@/api/article'
 @Component({
+  head: {
+    title: 'Ye博客-用户文章管理'
+  },
   components: {
     DialogArticleEdit
   },

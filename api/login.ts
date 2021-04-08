@@ -4,7 +4,11 @@ interface params<t> {
 }
 // 获取图片验证码
 export function getLoginCaptcha (payload: params<any>) {
-  return payload.$axios.get('/captcha')
+  return payload.$axios.request({
+    url: '/captcha',
+    method: 'get',
+    withCredentials: true
+  })
 }
 // 用户注册
 export function postUserRegister (payload: params<any>) {

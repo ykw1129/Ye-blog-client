@@ -47,7 +47,7 @@ Vue.use(VueDOMPurifyHTML)
     if (params.id) {
       const content = await getArticleContent({ $axios, param: { id: params.id } })
       if (content.code === 200) {
-        (app as any).head!.title = content.data.title
+        (app as any).head.title = `文章-${content.data.title}`
         // 将文章名赋值给title
         about = await getAboutArticle({ $axios, param: { id: content.data.createUser._id, articleId: content.data._id } })
         return {
