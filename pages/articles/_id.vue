@@ -30,19 +30,25 @@ import ArticleOther from '~/components/article/ArticleOther.vue'
 import ArticleMain from '~/components/article/ArticleMain.vue'
 Vue.use(VueDOMPurifyHTML)
 @Component({
+  head: {
+  },
+  loading: true,
   components: {
     ArticleTag,
     ArticleOther,
     ArticleMain,
     ArticleUserDtail
   },
+
   layout: 'article',
   auth: false,
-  async asyncData ({ params, $axios }) {
+  async asyncData ({ app, params, $axios }) {
     let about
     if (params.id) {
       const content = await getArticleContent({ $axios, param: { id: params.id } })
       if (content.code === 200) {
+        (app as any).head!.title = content.data.title
+        // 将文章名赋值给title
         about = await getAboutArticle({ $axios, param: { id: content.data.createUser._id, articleId: content.data._id } })
         return {
           content: content.data,

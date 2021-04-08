@@ -1,14 +1,15 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'ykw-blog-client',
+    title: 'Ye博客',
     htmlAttrs: {
       lang: 'cn'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { name: 'keywords', content: '技术博客,个人网站,技术分享,经验交流,前端项目,前端开发,全栈开发' },
+      { hid: 'description', name: 'description', content: 'Ye博客,放置前端技术知识，个人项目经验，个人技术总结，为所有前端开发提供的免费的知识分享，期望和大家一起交流，一起进步！' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
@@ -85,8 +86,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseUrl: process.env.BASE_URL,
-    credentials: true
+    baseUrl: process.env.BASE_URL
   },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
@@ -94,7 +94,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: [/^element-ui/]
+    transpile: [/^element-ui/],
+    analyze: true
   },
   server: {
     port: process.env.BASE_PORT,
