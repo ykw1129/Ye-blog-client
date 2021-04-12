@@ -107,7 +107,7 @@ export default class DialogProject extends Mixins(UploadMixin, CaptchaMixin) {
     name: [{ required: true, trigger: 'blur', message: '请填写项目标题' }, { max: 20, trigger: 'change', message: '标题最大为20个字符' }],
     linkUrl: [{ required: true, trigger: 'blur', message: '请填写仓库/代码地址' }, { pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\*\+,;=.]+$/, trigger: 'change', message: '请输入正确的格式!' }],
     projectUrl: [{ required: true, trigger: 'blur', message: '请填写项目/部署地址' }, { pattern: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\*\+,;=.]+$/, trigger: 'change', message: '请输入正确的格式!' }],
-    captcha: [{ required: true, trigger: 'blur', message: '图片验证码不能为空' }, { pattern: /^[A-Za-z0-9]{4}$/, trigger: 'change', message: '请输入正确的图片验证码' }],
+    captcha: [{ required: true, trigger: 'blur', message: '图片验证码不能为空' }, { pattern: /^[A-Za-z0-9]{4}$/, trigger: 'blur', message: '请输入正确的图片验证码' }],
     description: [{ required: true, trigger: 'blur', message: '请填写项目描述' }, { max: 30, trigger: 'change', message: '描述最大为30个字符' }]
   };
 

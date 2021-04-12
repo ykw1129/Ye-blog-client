@@ -4,7 +4,7 @@ export default class CaptchaMixin extends Vue {
     captchaTip: string = '点击获取图片验证码'
     imageCodeUrl: string = ''
     getCaptcha () {
-      this.imageCodeUrl = `http://localhost:7001/captcha?timestamp=${Date.now()}`
+      this.imageCodeUrl = `https://bapi.ykweb.xyz/captcha?timestamp=${Date.now()}`
     }
 
     cancel () {

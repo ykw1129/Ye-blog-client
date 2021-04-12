@@ -46,10 +46,6 @@ export default {
         }
       }
     },
-    redirect: {
-      home: '/articles',
-      logout: '/articles'
-    },
     cookie: {
       options: {
         maxAge: 60 * 60 * 24
@@ -88,8 +84,8 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseUrl: process.env.BASE_URL,
-    withCredentials: true
+    baseUrl: 'https://bapi.ykweb.xyz',
+    credentials: true
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

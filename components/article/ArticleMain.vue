@@ -33,25 +33,28 @@
     <div class="cover">
       <img :src="content.coverId.url" :alt="content.coverId.name">
     </div>
-    <div v-if="content.contentType==='0'" v-dompurify-html="content.content" class="content" />
-    <mavon-editor
-      v-else
-      :value="content.content"
-      default-open="preview"
-      :ishljs="true"
-      :toolbars-flag="false"
-      :editable="false"
-      :subfield="false"
-      box-shadow-style="none"
-      preview-background="#fff"
-    />
+    <client-only>
+      <div v-if="content.contentType==='0'" v-dompurify-html="content.content" class="content" />
+      <mavon-editor
+        v-else
+        ref="md"
+        :value="content.content"
+        default-open="preview"
+        :ishljs="true"
+        :toolbars-flag="false"
+        :editable="false"
+        :subfield="false"
+        box-shadow-style="none"
+        preview-background="#fff"
+      />
+    </client-only>
     <Comment-Article :article-id="content._id" />
   </main>
 </template>
 
 <script lang='ts'>
 import CommentArticle from '@/components/comment/CommentArticle.vue'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Ref, Vue } from 'vue-property-decorator'
 import 'mavon-editor/dist/css/index.css'
 @Component({
   components: {
@@ -59,6 +62,7 @@ import 'mavon-editor/dist/css/index.css'
   }
 })
 export default class MainArticle extends Vue {
+  @Ref('md') readonly mdRef:any
   @Prop({ type: Object, required: true }) private content: any
 }
 </script>

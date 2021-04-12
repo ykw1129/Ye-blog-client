@@ -6,8 +6,7 @@ interface params<t> {
 export function getLoginCaptcha (payload: params<any>) {
   return payload.$axios.request({
     url: '/captcha',
-    method: 'get',
-    withCredentials: true
+    method: 'get'
   })
 }
 // 用户注册

@@ -238,7 +238,7 @@ export default class DialogArticle extends Mixins(UploadMixin, CaptchaMixin) {
   articleRules = {
     title: [{ required: true, trigger: 'blur', message: '请填写文章标题' }, { max: 20, trigger: 'change', message: '标题最大为20个字符' }],
     description: [{ required: true, trigger: 'blur', message: '请填写文章描述' }, { max: 30, trigger: 'change', message: '描述最大为30个字符' }],
-    captcha: [{ required: true, trigger: 'blur', message: '图片验证码不能为空' }, { pattern: /^[A-Za-z0-9]{4}$/, trigger: 'change', message: '请输入正确的图片验证码' }]
+    captcha: [{ required: true, trigger: 'blur', message: '图片验证码不能为空' }, { pattern: /^[A-Za-z0-9]{4}$/, trigger: 'blur', message: '请输入正确的图片验证码' }]
   }
 
   // 点击选择搜索出的标签时触发

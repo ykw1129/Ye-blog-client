@@ -104,7 +104,7 @@ export default class Register extends Mixins(CaptchaMixin) {
     email: [{ required: true, trigger: 'blur', message: '邮箱不能为空' }, { pattern: /^([a-zA-Z\d])(\w|\-)+@[a-zA-Z\d]+\.[a-zA-Z]{2,4}$/, trigger: 'blur', message: '邮箱格式错误' }],
     password: [{ required: true, trigger: 'blur', message: '密码不能为空' }, { pattern: /^.*(?=.{6,18})(?=.*\d)(?=.*[A-Za-z]).*$/, trigger: 'blur', message: '密码长度不得超过15个字符' }],
     passwordcheck: [{ validator: this.validatePasswordCheck, trigger: 'blur' }],
-    captcha: [{ required: true, trigger: 'blur', message: '图片验证码不能为空' }, { pattern: /^[A-Za-z0-9]{4}$/, trigger: 'change', message: '请输入正确的图片验证码' }]
+    captcha: [{ required: true, trigger: 'blur', message: '图片验证码不能为空' }, { pattern: /^[A-Za-z0-9]{4}$/, trigger: 'blur', message: '请输入正确的图片验证码' }]
   };
 
   routerToLogin () {

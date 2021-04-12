@@ -13,14 +13,6 @@ export function upload (payload:params<any>) {
     data: payload.param
   })
 }
-// 上传随机
-export function uploadRandom (payload:params<any>) {
-  return payload.$axios.request({
-    url: '/upload/random',
-    method: 'post',
-    data: payload.param
-  })
-}
 // 更新用户信息
 export function putUserInfo (payload:params<any>) {
   return payload.$axios.request({

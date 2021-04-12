@@ -131,7 +131,7 @@ export default class Edit extends Mixins(CaptchaMixin, UploadMixin) {
   editRules = {
     username: [{ required: true, trigger: 'blur', message: '用户名不能为空' }, { type: 'string', max: 12, trigger: 'change', message: '用户名不超过12个字符' }],
     phone: [{ pattern: /^1[34578]\d{9}$/, trigger: 'blur', message: '手机号码格式错误' }],
-    captcha: [{ required: true, trigger: 'blur', message: '图片验证码不能为空' }, { pattern: /^[A-Za-z0-9]{4}$/, trigger: 'change', message: '请输入正确的图片验证码' }],
+    captcha: [{ required: true, trigger: 'blur', message: '图片验证码不能为空' }, { pattern: /^[A-Za-z0-9]{4}$/, trigger: 'blur', message: '请输入正确的图片验证码' }],
     description: [{ required: true, trigger: 'blur', message: '个人简介不能为空' }, { type: 'string', max: 50, trigger: 'change', message: '个人简介不超过50个字符' }]
   };
 }
