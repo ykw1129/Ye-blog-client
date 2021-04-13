@@ -82,7 +82,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseUrl: 'http://localhost:7001',
+    baseUrl: 'https://bapi.ykweb.xyz',
     credentials: true
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
