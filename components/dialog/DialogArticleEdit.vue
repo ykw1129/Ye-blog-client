@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="发布文章" :visible="ArticleEditVisible" width="70%" @close="dialogClose">
+  <el-dialog title="编辑文章" :visible="ArticleEditVisible" width="70%" @close="dialogClose">
     <el-form ref="articleForm" :model="articleForm" status-icon :rules="articleRules">
       <el-form-item label="文章标题" :label-width="formLabelWidth" prop="title">
         <el-input v-model="articleForm.title" autocomplete="off" placeholder="输入你的文章标题" />

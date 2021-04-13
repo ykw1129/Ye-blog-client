@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="发布项目" :visible="ProjectEditVisible" @close="dialogClose">
+  <el-dialog title="编辑项目" :visible="ProjectEditVisible" @close="dialogClose">
     <el-form ref="projectForm" :model="projectForm" status-icon :rules="projectRules">
       <el-form-item label="项目名称" :label-width="formLabelWidth" prop="name">
         <el-input v-model="projectForm.name" autocomplete="off" placeholder="输入你的项目名称" />

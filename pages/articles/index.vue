@@ -4,7 +4,7 @@
       <li v-for="article in articles" :key="article._id">
         <nuxt-link :to="`/articles/${article._id}`">
           <div class="cover">
-            <img :src="article.coverId.url" :alt="article.title">
+            <el-image :src="article.coverId.url" fit="cover" :lazy="true" :alt="article.title" />
           </div>
           <div class="other">
             <h4>{{ article.title }}</h4>
@@ -100,8 +100,7 @@ export default class Articles extends Vue {
 <style scoped lang="scss">
 #article {
   ul {
-
-    height:1100px;
+    height:1320px;
     li {
       background-color: #fff;
       margin-bottom: 20px;
@@ -127,9 +126,8 @@ export default class Articles extends Vue {
           width: 300px;
           box-sizing: border-box;
           padding: 5px;
-          img {
-            width: 100%;
-            height: 100%;
+          .el-image{
+            height: 190px;
           }
         }
         .other {
@@ -139,7 +137,8 @@ export default class Articles extends Vue {
           padding: 5px 10px;
           float: left;
           h4 {
-            font-size: 22px;
+            font-size: 20px;
+            line-height: 1.5;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -148,7 +147,7 @@ export default class Articles extends Vue {
           .description {
             color: #909399;
             line-height: 1.5;
-            height: 80px;
+            height: 70px;
             font-size: 14px;
             margin-bottom: 10px;
             overflow: hidden;
