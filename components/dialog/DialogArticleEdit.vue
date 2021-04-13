@@ -131,7 +131,7 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="articleVisible = false">
+      <el-button @click="dialogClose">
         取 消
       </el-button>
       <el-button type="primary" @click="putArticle()">

@@ -61,7 +61,7 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="ProjectVisible = false">
+      <el-button @click="dialogClose">
         取 消
       </el-button>
       <el-button type="primary" @click="postProject()">
@@ -135,18 +135,13 @@ export default class DialogProject extends Mixins(UploadMixin, CaptchaMixin) {
         if (res.code === 200) {
           const info = await this.$auth.fetchUser()
           if ((info as any).code === 200) {
-            this.projectRef.resetProject()
-            this.ProjectVisible = false
+            this.projectRef.resetFields()
+            this.dialogClose()
+            location.reload()
           }
         }
       }
     })
-  }
-
-  // 重置项目表单
-  resetProject (name: string) {
-    const form = this.projectRef[name]
-    form.resetFields()
   }
 }
 </script>

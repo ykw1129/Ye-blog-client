@@ -1,60 +1,62 @@
 <template>
   <header>
-    <el-menu
-      :default-active="activeIndex"
-      class="el-menu-demo"
-      mode="horizontal"
-      router
-      @select="handleSelect"
-    >
-      <el-menu-item index="/articles">
-        <i class="el-icon-notebook-1" />
-        文章
-      </el-menu-item>
-      <el-menu-item index="/project">
-        <i class="el-icon-folder-opened" />
-        项目
-      </el-menu-item>
+    <client-only>
+      <el-menu
+        :default-active="activeIndex"
+        class="el-menu-demo"
+        mode="horizontal"
+        router
+        @select="handleSelect"
+      >
+        <el-menu-item index="/articles">
+          <i class="el-icon-notebook-1" />
+          文章
+        </el-menu-item>
+        <el-menu-item index="/project">
+          <i class="el-icon-folder-opened" />
+          项目
+        </el-menu-item>
 
-      <el-submenu v-if="auth.loggedIn" class="right" index="/">
-        <template slot="title">
-          <span class="username">{{ auth.user.username }}</span>
-          <el-avatar
-            icon="el-icon-user-solid"
-            size="large"
-            shape="circle"
-            fit="cover"
-            :src="auth.user.avatarId.url"
+        <el-submenu v-if="auth.loggedIn" class="right" index="/">
+          <template slot="title">
+            <span class="username">{{ auth.user.username }}</span>
+            <el-avatar
+              icon="el-icon-user-solid"
+              size="large"
+              shape="circle"
+              fit="cover"
+              :src="auth.user.avatarId.url"
+            />
+          </template>
+          <el-menu-item index="/user/articles">
+            个人中心
+          </el-menu-item>
+          <el-menu-item @click="logout">
+            登出
+          </el-menu-item>
+        </el-submenu>
+        <el-menu-item v-if="!auth.loggedIn" index="/register" class="right">
+          <i class="el-icon-user-solid" />
+          注册
+        </el-menu-item>
+        <el-menu-item v-if="!auth.loggedIn" index="/login" class="right">
+          <i class="el-icon-user" />
+          登录
+        </el-menu-item>
+        <el-menu-item class="right">
+          <el-autocomplete
+            v-model="searchWord"
+            highlight-first-item
+            :trigger-on-focus="false"
+            :fetch-suggestions="querySearchAsync"
+            placeholder="请输入关键字"
+            prefix-icon="el-icon-search"
+            style="width:300px"
+            @select="handleSelect"
           />
-        </template>
-        <el-menu-item index="/user/articles">
-          个人中心
         </el-menu-item>
-        <el-menu-item @click="logout">
-          登出
-        </el-menu-item>
-      </el-submenu>
-      <el-menu-item v-if="!auth.loggedIn" index="/register" class="right">
-        <i class="el-icon-user-solid" />
-        注册
-      </el-menu-item>
-      <el-menu-item v-if="!auth.loggedIn" index="/login" class="right">
-        <i class="el-icon-user" />
-        登录
-      </el-menu-item>
-      <el-menu-item class="right">
-        <el-autocomplete
-          v-model="searchWord"
-          highlight-first-item
-          :trigger-on-focus="false"
-          :fetch-suggestions="querySearchAsync"
-          placeholder="请输入关键字"
-          prefix-icon="el-icon-search"
-          style="width:300px"
-          @select="handleSelect"
-        />
-      </el-menu-item>
-    </el-menu>
+      </el-menu>
+    </client-only>
   </header>
 </template>
 

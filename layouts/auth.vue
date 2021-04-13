@@ -1,7 +1,7 @@
 <template>
   <div
     id="default"
-    :style="{backgroundImage:`url(${auth.loginIn?auth.user.bgImageId.url:'https://ceshi123123123.oss-cn-beijing.aliyuncs.com/blog/background/bgimage.jpg'})`}"
+    :style="{backgroundImage:`url(${auth.loggedIn?auth.user.bgImageId.url:'https://ceshi123123123.oss-cn-beijing.aliyuncs.com/blog/background/bgimage.jpg'})`}"
   >
     <Header />
     <div id="content">

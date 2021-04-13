@@ -1,7 +1,7 @@
 <template>
   <div
     id="default"
-    :style="{backgroundImage:`url(${auth.loginIn?auth.user.bgImageId.url:'https://ceshi123123123.oss-cn-beijing.aliyuncs.com/blog/background/bgimage.jpg'})`}"
+    :style="{backgroundImage:`url(${auth.loggedIn?auth.user.bgImageId.url:'https://ceshi123123123.oss-cn-beijing.aliyuncs.com/blog/background/bgimage.jpg'})`}"
   >
     <Header />
     <div id="content">
@@ -9,15 +9,17 @@
         <Nuxt />
       </main>
       <aside>
-        <div v-if="auth.user" class="user-detail">
-          <User-Detail :user="auth.user" />
-        </div>
-        <div v-if="auth.loggedIn" class="post">
-          <h2>
-            <i class="el-icon-folder-add" /> 发布
-          </h2>
-          <PostButton />
-        </div>
+        <client-only>
+          <div v-if="auth.loggedIn" class="user-detail">
+            <User-Detail :user="auth.user" />
+          </div>
+          <div v-if="auth.loggedIn" class="post">
+            <h2>
+              <i class="el-icon-folder-add" /> 发布
+            </h2>
+            <PostButton />
+          </div>
+        </client-only>
         <div class="hot-tag">
           <h2>
             <i class="el-icon-collection-tag" /> 热门标签

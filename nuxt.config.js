@@ -77,14 +77,12 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next',
-    // https://go.nuxtjs.dev/content
-    ['@nuxtjs/dotenv', { filename: `.env.${process.env.BASE}` }]
+    '@nuxtjs/auth-next'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseUrl: 'https://bapi.ykweb.xyz',
+    baseUrl: 'http://localhost:7001',
     credentials: true
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build

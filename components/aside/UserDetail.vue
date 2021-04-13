@@ -12,27 +12,27 @@
       {{ user.description }}
     </h3>
     <div class="links">
-      <a v-if="user.meta.github" target="_blank" :href="user.meta.github">
+      <a v-show="user.meta.github" target="_blank" :href="user.meta.github">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-huaban881" />
         </svg>
       </a>
-      <a v-if="user.meta.zhihu" target="_blank" :href="user.meta.zhihu">
+      <a v-show="user.meta.zhihu" target="_blank" :href="user.meta.zhihu">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-zhihu" />
         </svg>
       </a>
-      <a v-if="user.meta.qq" target="_blank" :href="user.meta.qq">
+      <a v-show="user.meta.qq" target="_blank" :href="user.meta.qq">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-qq" />
         </svg>
       </a>
-      <a v-if="user.meta.weibo" target="_blank" :href="user.meta.weibo">
+      <a v-show="user.meta.weibo" target="_blank" :href="user.meta.weibo">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-weibo-copy" />
         </svg>
       </a>
-      <a v-if="user.meta.bilibili" target="_blank" :href="user.meta.bilibili">
+      <a v-show="user.meta.bilibili" target="_blank" :href="user.meta.bilibili">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-bilibili" />
         </svg>
