@@ -18,20 +18,20 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 })
 export default class HotTag extends Vue {
-    @Prop({ type: Array }) private tags:string|undefined
-    handleTagClick (id:string) {
-      this.$router.push(`/tag/${id}`)
-    }
+  @Prop({ type: Array }) private tags: string | undefined
+  handleTagClick (id: string) {
+    this.$router.push(`/tag/${id}`)
+  }
 }
 </script>
 
 <style scoped lang="scss">
-ul{
-    li{
-        display: inline-block;
-        margin-right: 20px;
-        cursor: pointer;
-    }
+ul {
+  li {
+    margin-bottom: 10px;
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+  }
 }
-
 </style>

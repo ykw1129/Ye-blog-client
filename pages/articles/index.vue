@@ -57,7 +57,7 @@
     <div class="papagination">
       <el-pagination
         background
-        :page-size="5"
+        :page-size="6"
         :pager-count="11"
         layout="prev, pager, next"
         :total="total"
