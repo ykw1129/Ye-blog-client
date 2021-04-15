@@ -10,7 +10,8 @@ export function upload (payload:params<any>) {
     headers: {
       'Content-Type': 'multipart/form-data'
     },
-    data: payload.param
+    data: payload.param,
+    withCredentials: true
   })
 }
 // 更新用户信息
